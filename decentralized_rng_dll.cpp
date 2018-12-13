@@ -64,7 +64,7 @@ namespace RNG
     public:
         virtual const Hash256* CALL BeginHand(const BeginHandParams& params) override
         {
-            // Add new HandInfo 
+            // Add new HandInfo
             TMap::iterator itr = m_map.insert(TMap::value_type(params.handId, HandInfo())).first;
             if (itr == m_map.end())
             {
@@ -82,7 +82,7 @@ namespace RNG
             for (int i = 0; i < params.nicknameListSize; i++)
             {
                 const NicknameInfo& nicknameInfo = params.nicknameList[i];
-                
+
                 PlayerInfo newPlayerInfo;
                 newPlayerInfo.playerSeatIndex = nicknameInfo.playerSeatIndex;
                 newPlayerInfo.nickname = nicknameInfo.nickname;
@@ -107,7 +107,7 @@ namespace RNG
                     (uint8_t)rd(), (uint8_t)rd(), (uint8_t)rd(), (uint8_t)rd(), (uint8_t)rd(), (uint8_t)rd(), (uint8_t)rd(), (uint8_t)rd(),
                 };
             }
- 
+
             handInfoPtr->seed = seed;
 
             Hash256 hashedSeed;
@@ -289,7 +289,7 @@ namespace RNG
             for (unsigned i = 0; i < sizeof(object); i++)
             {
                 const unsigned char dec = bytePtr[i];
-                
+
                 const unsigned char value = dec / 16;
                 const unsigned char remainder = dec - value * 16;
 
@@ -333,7 +333,7 @@ namespace RNG
             return cardHash == resHash;
         }
 
-        
+
         const CardVerifyInfo* FindCardVerifyInfo(const CardVerifyInfoList& cardVerifyInfoList, int shuffledCardIndex) const
         {
             for (unsigned i = 0; i < cardVerifyInfoList.size(); i++)
@@ -402,6 +402,7 @@ namespace RNG
                 //
                 outputFile << std::endl;
                 outputFile << "Seeds by seat index:" << std::endl;
+                outputFile << "       Seed Hex Representation                                            Seed Text Representation" << std::endl;
                 outputFile << "    -1 " << Dec2Hex(handInfo.operatorInfo.seed) << " | ASCII: ";
                 printSeedAscii(outputFile, handInfo.operatorInfo.seed);
                 outputFile << " (operator)" << std::endl;
@@ -430,6 +431,9 @@ namespace RNG
 
                 outputFile << std::endl;
                 outputFile << "Shuffled hashed deck:" << std::endl;
+                outputFile << "    Card Hash                                                           "
+                    << "Card Hex Representation (salt + card)                                       "
+                    << "Card Text Representation" << std::endl;
                 for (unsigned i = 0; i < shuffledDeck.size(); i++)
                 {
                     const int initialCardIndex = std::find(initialDeck.begin(), initialDeck.end(), shuffledDeck[i]) - initialDeck.begin();
@@ -461,7 +465,7 @@ namespace RNG
 }//RNG
 
 #if defined WIN32
-    #define EXPORT    
+    #define EXPORT
 #else
     #define EXPORT __attribute__((visibility("default")))
 #endif
