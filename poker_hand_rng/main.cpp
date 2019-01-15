@@ -1,4 +1,3 @@
-#include "decentralized_rng_dll.h"
 #include <random>
 #include <map>
 #include <cstring>
@@ -13,11 +12,10 @@
 #include <locale>
 #include <cctype>
 
-#include "modules/Keccak/keccak.h"
-#include "modules/shuffle_knuth.h"
-#include "modules/sfmt.h"
+#include <decentralized_rng/utils.h>
+#include <decentralized_rng/hand_interface.h>
 
-namespace RNG
+namespace DecentralizedRNG
 {
     using HashInfoList = std::vector<HashInfo>;
     using HashedCardsDeck = std::vector<CardHash>;
@@ -57,7 +55,7 @@ namespace RNG
         CardVerifyInfoList  cardVerifyInfoList;
     };
 
-    class DecentralizedRandomNumberGenerator : public IDecentralizedRandomNumberGenerator
+    class HandRNG : public IHandRNG
     {
         using TMap = std::map<HandId, HandInfo>;
 
@@ -194,7 +192,10 @@ namespace RNG
 
             handInfoPtr->combinedSeed = CalculateCombinedSeed(params.seedInfoList, params.seedInfoListSize);
             handInfoPtr->shuffledDeck = ShuffleDeck(handInfoPtr->initialDeck, handInfoPtr->combinedSeed);
-            handInfoPtr->cardVerifyInfoList.insert(handInfoPtr->cardVerifyInfoList.begin(), &params.cardsToVerifyList[0], &params.cardsToVerifyList[params.cardsToVerifyListSize]);
+
+            if (params.cardsToVerifyList) {
+                handInfoPtr->cardVerifyInfoList.insert(handInfoPtr->cardVerifyInfoList.begin(), &params.cardsToVerifyList[0], &params.cardsToVerifyList[params.cardsToVerifyListSize]);
+            }
 
             // log
             LogFull(*handInfoPtr);
@@ -272,7 +273,7 @@ namespace RNG
             }
 
             HashedCardsDeck result = deck;
-            shuffle_knuth(result.begin(), result.end(), Sfmt({seed.begin(), seed.end()}));
+            ShuffleKnuth()(result.begin(), result.end(), Sfmt({seed.begin(), seed.end()}));
             return result;
         }
 
@@ -471,13 +472,13 @@ namespace RNG
 #endif
 
 EXPORT
-RNG::IDecentralizedRandomNumberGenerator* CreateRNG()
+DecentralizedRNG::IHandRNG* CreateHandRNG()
 {
-    return new RNG::DecentralizedRandomNumberGenerator();
+    return new DecentralizedRNG::HandRNG();
 }
 
 EXPORT
-void DestroyRNG(RNG::IDecentralizedRandomNumberGenerator* rng)
+void DestroyHandRNG(DecentralizedRNG::IHandRNG* rng)
 {
     delete rng;
 }

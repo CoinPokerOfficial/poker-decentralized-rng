@@ -1,4 +1,4 @@
-#include "sfmt.h"
+#include "decentralized_rng/utils.h"
 
 #include <limits>
 
@@ -13,7 +13,6 @@ Sfmt::Sfmt(const std::vector<uint8_t>& seed)
     : impl(new Impl)
 {
     assert(!(seed.size() % sizeof(uint32_t)));
-
     sfmt_init_by_array(&impl->sfmt, reinterpret_cast<const uint32_t*>(seed.data()), seed.size()/4);
 }
 

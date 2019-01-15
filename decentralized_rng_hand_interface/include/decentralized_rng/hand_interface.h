@@ -1,28 +1,50 @@
-#pragma once
+// MIT License
+//
+// Copyright (c) 2019 CoinPoker
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+#ifndef DECENTRALIZEDRNG_HAND_INTERFACE_H
+#define DECENTRALIZEDRNG_HAND_INTERFACE_H
 
 #include <array>
 
 #ifdef WIN32
-    #ifdef RNGLIBRARY_EXPORTS  
-        #define RNGLIBRARY_API __declspec(dllexport)   
-    #else  
-        #define RNGLIBRARY_API __declspec(dllimport)   
-    #endif  
-    
+#ifdef RNGLIBRARY_EXPORTS
+        #define RNGLIBRARY_API __declspec(dllexport)
+    #else
+        #define RNGLIBRARY_API __declspec(dllimport)
+    #endif
+
     #define CALL __stdcall
 #else
-    #define RNGLIBRARY_API
-    #define CALL
+#define RNGLIBRARY_API
+#define CALL
 #endif
 
-
-namespace RNG
+namespace DecentralizedRNG
 {
     using HandId = unsigned long long;
 
     using Seed256 = std::array<unsigned char, 32>;
     using Hash256 = std::array<unsigned char, 32>;
-    
+
     using CardSalt = std::array<unsigned char, 32>;
     using CardHash = std::array<unsigned char, 32>;
 
@@ -88,7 +110,7 @@ namespace RNG
     };
 
 
-    class IDecentralizedRandomNumberGenerator
+    class IHandRNG
     {
     public:
         virtual const Hash256* CALL BeginHand(const BeginHandParams& params) = 0;
@@ -97,13 +119,15 @@ namespace RNG
         virtual Result::Enum CALL VerifyHand(const VerifyHandParams& params) = 0;
 
     public:
-        virtual ~IDecentralizedRandomNumberGenerator() {}
+        virtual ~IHandRNG() {}
     };
-    
+
 }//RNG
 
 extern "C"
 {
-    RNGLIBRARY_API RNG::IDecentralizedRandomNumberGenerator* CreateRNG();
-    RNGLIBRARY_API void DestroyRNG(RNG::IDecentralizedRandomNumberGenerator* rng);
+    RNGLIBRARY_API DecentralizedRNG::IHandRNG* CreateHandRNG();
+    RNGLIBRARY_API void DestroyHandRNG(DecentralizedRNG::IHandRNG* rng);
 }
+
+#endif //DECENTRALIZEDRNG_HAND_INTERFACE_H
