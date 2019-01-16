@@ -1,6 +1,6 @@
-# Decentralized RNG for poker hand
+# Decentralized RNG for deck shuffling and verification
 
-This project defines interface, that is used to implement decentralized rng for poker hands shuffling and verification.
+This project defines interface, that is used to implement decentralized rng for deck shuffling and verification.
 Detailed description of CoinPoker decentralized RNG protocol can be found [here](https://coinpoker.com/downloads/CoinPoker_RNG.pdf).
 
 ## Brief protocol description with implementation tips

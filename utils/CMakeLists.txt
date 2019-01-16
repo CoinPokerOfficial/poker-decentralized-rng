@@ -3,7 +3,7 @@ project(DecentralizedRNGUtils
         LANGUAGES CXX
         VERSION 1.0.0)
 
-add_library(Utils
+add_library(Utils STATIC # this lib is always static
         src/keccak.cpp
         src/sfmt.cpp)
 

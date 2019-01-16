@@ -1,7 +1,7 @@
-# PokerHandRNG shared library
+# DeckRNG shared library
 
-Implementation of [DecentralizedRNGHandInterface](../decentralized_rng_hand_interface/README.md) for [CoinPoker](https://coinpoker.com) client.
-It creates single shared library, -`PokerHandRNG`.
+Implementation of [DeckInterface](../deck_interface/README.md) for [CoinPoker](https://coinpoker.com) client.
+It creates single shared library, -`DeckRNG`.
  
 ## How to test
 

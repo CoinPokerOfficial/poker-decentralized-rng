@@ -20,8 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef DECENTRALIZEDRNG_HAND_INTERFACE_H
-#define DECENTRALIZEDRNG_HAND_INTERFACE_H
+#ifndef DECENTRALIZEDRNG_DECK_INTERFACE_H
+#define DECENTRALIZEDRNG_DECK_INTERFACE_H
 
 #include <array>
 
@@ -38,7 +38,7 @@
 #define CALL
 #endif
 
-namespace DecentralizedRNGHand
+namespace DecentralizedRNGDeck
 {
     using HandId = unsigned long long;
 
@@ -110,7 +110,7 @@ namespace DecentralizedRNGHand
     };
 
 
-    class IHandRNG
+    class IDeckRNG
     {
     public:
         virtual const Hash256* CALL BeginHand(const BeginHandParams& params) = 0;
@@ -119,15 +119,15 @@ namespace DecentralizedRNGHand
         virtual Result::Enum CALL VerifyHand(const VerifyHandParams& params) = 0;
 
     public:
-        virtual ~IHandRNG() {}
+        virtual ~IDeckRNG() {}
     };
 
 }//RNG
 
 extern "C"
 {
-    RNGLIBRARY_API DecentralizedRNGHand::IHandRNG* CreateHandRNG();
-    RNGLIBRARY_API void DestroyHandRNG(DecentralizedRNGHand::IHandRNG* rng);
+    RNGLIBRARY_API DecentralizedRNGDeck::IDeckRNG* CreateDeckRNG();
+    RNGLIBRARY_API void DestroyDeckRNG(DecentralizedRNGDeck::IDeckRNG* rng);
 }
 
-#endif //DECENTRALIZEDRNG_HAND_INTERFACE_H
+#endif //DECENTRALIZEDRNG_DECK_INTERFACE_H
