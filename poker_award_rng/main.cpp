@@ -8,7 +8,7 @@
 
 #define VERSION "1.0.0"
 
-namespace DecentralizedRNG
+namespace DecentralizedRNGAward
 {
     typedef Seed256 Hash256;
 
@@ -430,11 +430,11 @@ namespace DecentralizedRNG
 #define EXPORT __attribute__((visibility("default")))
 #endif
 
-EXPORT DecentralizedRNG::IAwardRNG* CreateAwardRNG()
+EXPORT DecentralizedRNGAward::IAwardRNG* CreateAwardRNG()
 {
     try
     {
-        return new DecentralizedRNG::AwardRNG();
+        return new DecentralizedRNGAward::AwardRNG();
     }
     catch (const std::exception&)
     {
@@ -442,7 +442,7 @@ EXPORT DecentralizedRNG::IAwardRNG* CreateAwardRNG()
     }
 }
 
-EXPORT void DestroyAwardRNG(DecentralizedRNG::IAwardRNG* rng)
+EXPORT void DestroyAwardRNG(DecentralizedRNGAward::IAwardRNG* rng)
 {
     if (!rng)
     {

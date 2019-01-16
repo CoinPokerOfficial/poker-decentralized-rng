@@ -15,7 +15,7 @@
 #include <decentralized_rng/utils.h>
 #include <decentralized_rng/hand_interface.h>
 
-namespace DecentralizedRNG
+namespace DecentralizedRNGHand
 {
     using HashInfoList = std::vector<HashInfo>;
     using HashedCardsDeck = std::vector<CardHash>;
@@ -472,13 +472,13 @@ namespace DecentralizedRNG
 #endif
 
 EXPORT
-DecentralizedRNG::IHandRNG* CreateHandRNG()
+DecentralizedRNGHand::IHandRNG* CreateHandRNG()
 {
-    return new DecentralizedRNG::HandRNG();
+    return new DecentralizedRNGHand::HandRNG();
 }
 
 EXPORT
-void DestroyHandRNG(DecentralizedRNG::IHandRNG* rng)
+void DestroyHandRNG(DecentralizedRNGHand::IHandRNG* rng)
 {
     delete rng;
 }

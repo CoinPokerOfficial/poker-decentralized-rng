@@ -41,7 +41,7 @@
 #define CALL
 #endif
 
-namespace DecentralizedRNG
+namespace DecentralizedRNGAward
 {
     typedef std::array<uint8_t, 32> Seed256;
 
@@ -77,8 +77,8 @@ namespace DecentralizedRNG
 
 extern "C"
 {
-    RNGLIBRARY_API DecentralizedRNG::IAwardRNG* CreateAwardRNG();
-    RNGLIBRARY_API void DestroyAwardRNG(DecentralizedRNG::IAwardRNG* rng);
+    RNGLIBRARY_API DecentralizedRNGAward::IAwardRNG* CreateAwardRNG();
+    RNGLIBRARY_API void DestroyAwardRNG(DecentralizedRNGAward::IAwardRNG* rng);
 }
 
 #endif // DECENTRALIZEDRNG_AWARD_INTERFACE_H

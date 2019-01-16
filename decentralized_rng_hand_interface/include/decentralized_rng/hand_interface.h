@@ -38,7 +38,7 @@
 #define CALL
 #endif
 
-namespace DecentralizedRNG
+namespace DecentralizedRNGHand
 {
     using HandId = unsigned long long;
 
@@ -126,8 +126,8 @@ namespace DecentralizedRNG
 
 extern "C"
 {
-    RNGLIBRARY_API DecentralizedRNG::IHandRNG* CreateHandRNG();
-    RNGLIBRARY_API void DestroyHandRNG(DecentralizedRNG::IHandRNG* rng);
+    RNGLIBRARY_API DecentralizedRNGHand::IHandRNG* CreateHandRNG();
+    RNGLIBRARY_API void DestroyHandRNG(DecentralizedRNGHand::IHandRNG* rng);
 }
 
 #endif //DECENTRALIZEDRNG_HAND_INTERFACE_H
