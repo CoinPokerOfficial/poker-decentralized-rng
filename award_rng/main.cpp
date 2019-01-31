@@ -2,6 +2,7 @@
 #include <sstream>
 #include <algorithm>
 #include <iomanip>
+#include <cctype>
 
 #include <decentralized_rng/utils.h>
 #include <decentralized_rng/award_interface.h>
