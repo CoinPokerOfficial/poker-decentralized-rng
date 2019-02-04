@@ -27,18 +27,19 @@
 #include <array>
 
 #ifdef WIN32
-#ifdef RNGLIBRARY_EXPORTS
-        #define RNGLIBRARY_API __declspec(dllexport)
-    #elif RNGLIBRARY_SOURCE
-        #define RNGLIBRARY_API
+
+    #ifdef AWARDRNGLIB_SHARED_EXPORTS
+        #define AWARDRNGLIB_API __declspec(dllexport)
+    #elif defined AWARDRNGLIB_SHARED_IMPORTS
+        #define AWARDRNGLIB_API __declspec(dllimport)
     #else
-        #define RNGLIBRARY_API __declspec(dllimport)
+        #define AWARDRNGLIB_API
     #endif
 
     #define CALL __stdcall
 #else
-#define RNGLIBRARY_API
-#define CALL
+    #define AWARDRNGLIB_API
+    #define CALL
 #endif
 
 namespace DecentralizedRNGAward
@@ -77,8 +78,8 @@ namespace DecentralizedRNGAward
 
 extern "C"
 {
-    RNGLIBRARY_API DecentralizedRNGAward::IAwardRNG* CreateAwardRNG();
-    RNGLIBRARY_API void DestroyAwardRNG(DecentralizedRNGAward::IAwardRNG* rng);
+    AWARDRNGLIB_API DecentralizedRNGAward::IAwardRNG* CreateAwardRNG();
+    AWARDRNGLIB_API void DestroyAwardRNG(DecentralizedRNGAward::IAwardRNG* rng);
 }
 
 #endif // DECENTRALIZEDRNG_AWARD_INTERFACE_H

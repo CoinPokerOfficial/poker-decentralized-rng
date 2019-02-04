@@ -9,10 +9,15 @@ find_package(DecentralizedRNGAwardInterface REQUIRED)
 add_library(AwardRNG main.cpp)
 add_library(DecentralizedRNG::AwardRNG ALIAS AwardRNG)
 
+get_target_property(LIB_TYPE AwardRNG TYPE)
+if (LIB_TYPE STREQUAL "SHARED_LIBRARY")
+	target_compile_definitions(AwardRNG PUBLIC
+            $<BUILD_INTERFACE:AWARDRNGLIB_SHARED_EXPORTS>
+            $<INSTALL_INTERFACE:AWARDRNGLIB_SHARED_IMPORTS>)
+endif()
+
 target_compile_features(AwardRNG
         PUBLIC cxx_auto_type cxx_lambdas)
-set_target_properties(AwardRNG PROPERTIES
-        POSITION_INDEPENDENT_CODE ON)
 target_link_libraries(AwardRNG
         PUBLIC DecentralizedRNG::Utils DecentralizedRNG::AwardInterface)
 
@@ -25,7 +30,8 @@ install(TARGETS AwardRNG
         EXPORT AwardRNGTargets
         INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 install(EXPORT AwardRNGTargets
         FILE "DecentralizedRNGAwardRNGConfig.cmake"
         NAMESPACE DecentralizedRNG::

@@ -26,17 +26,21 @@
 #include <array>
 
 #ifdef WIN32
-#ifdef RNGLIBRARY_EXPORTS
-        #define RNGLIBRARY_API __declspec(dllexport)
+
+    #ifdef DECKRNGLIB_SHARED_EXPORTS
+        #define DECKRNGLIB_API __declspec(dllexport)
+    #elif defined DECKRNGLIB_SHARED_IMPORTS
+        #define DECKRNGLIB_API __declspec(dllimport)
     #else
-        #define RNGLIBRARY_API __declspec(dllimport)
+        #define DECKRNGLIB_API
     #endif
 
     #define CALL __stdcall
 #else
-#define RNGLIBRARY_API
-#define CALL
+    #define DECKRNGLIB_API
+    #define CALL
 #endif
+
 
 namespace DecentralizedRNGDeck
 {
@@ -126,8 +130,8 @@ namespace DecentralizedRNGDeck
 
 extern "C"
 {
-    RNGLIBRARY_API DecentralizedRNGDeck::IDeckRNG* CreateDeckRNG();
-    RNGLIBRARY_API void DestroyDeckRNG(DecentralizedRNGDeck::IDeckRNG* rng);
+    DECKRNGLIB_API DecentralizedRNGDeck::IDeckRNG* CreateDeckRNG();
+    DECKRNGLIB_API void DestroyDeckRNG(DecentralizedRNGDeck::IDeckRNG* rng);
 }
 
 #endif //DECENTRALIZEDRNG_DECK_INTERFACE_H
