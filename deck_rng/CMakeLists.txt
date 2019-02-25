@@ -23,12 +23,12 @@ target_link_libraries(DeckRNG
 
 #=============== setup installation =======================
 include(GNUInstallDirs)
+ApplyInstallPackagePrefix(DecentralizedRNGDeckRNG)
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/DecentralizedRNGDeckRNGConfigVersion.cmake
         COMPATIBILITY SameMajorVersion)
 install(TARGETS DeckRNG
         EXPORT DeckRNGTargets
-        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
