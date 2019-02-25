@@ -10,6 +10,7 @@ add_library(Utils STATIC # this lib is always static
 add_library(DecentralizedRNG::Utils ALIAS Utils)
 
 include(GNUInstallDirs)
+ApplyInstallPackagePrefix(DecentralizedRNGUtils)
 target_include_directories(Utils
         PUBLIC
             $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

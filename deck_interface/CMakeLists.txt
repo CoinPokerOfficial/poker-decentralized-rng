@@ -7,6 +7,7 @@ add_library(DeckInterface INTERFACE)
 add_library(DecentralizedRNG::DeckInterface ALIAS DeckInterface)
 
 include(GNUInstallDirs)
+ApplyInstallPackagePrefix(DecentralizedRNGDeckInterface)
 target_include_directories(DeckInterface INTERFACE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)

@@ -7,6 +7,7 @@ add_library(AwardInterface INTERFACE)
 add_library(DecentralizedRNG::AwardInterface ALIAS AwardInterface)
 
 include(GNUInstallDirs)
+ApplyInstallPackagePrefix(DecentralizedRNGAwardInterface)
 target_include_directories(AwardInterface INTERFACE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)

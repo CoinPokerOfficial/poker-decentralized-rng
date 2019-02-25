@@ -18,3 +18,4 @@ Enter following commands from project root.
 mkdir build && cd build
 cmake -DBUILD_SHARED_LIBS=ON ..
 ```
+After project is built, rename shared libraries `DeckRNG`, `AwardRNG` to `DeckRNG_custom`, `AwardRNG_custom` and copy to poker client root directory.

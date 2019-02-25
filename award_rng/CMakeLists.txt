@@ -14,21 +14,23 @@ if (LIB_TYPE STREQUAL "SHARED_LIBRARY")
 	target_compile_definitions(AwardRNG PUBLIC
             $<BUILD_INTERFACE:AWARDRNGLIB_SHARED_EXPORTS>
             $<INSTALL_INTERFACE:AWARDRNGLIB_SHARED_IMPORTS>)
+	set_target_properties(AwardRNG PROPERTIES POSITION_INDEPENDENT_CODE ON)
 endif()
 
 target_compile_features(AwardRNG
         PUBLIC cxx_auto_type cxx_lambdas)
 target_link_libraries(AwardRNG
-        PUBLIC DecentralizedRNG::Utils DecentralizedRNG::AwardInterface)
+        PRIVATE DecentralizedRNG::Utils
+        PUBLIC DecentralizedRNG::AwardInterface)
 
 #=============== setup installation =======================
 include(GNUInstallDirs)
+ApplyInstallPackagePrefix(DecentralizedRNGAwardRNG)
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/DecentralizedRNGAwardRNGConfigVersion.cmake
         COMPATIBILITY SameMajorVersion)
 install(TARGETS AwardRNG
         EXPORT AwardRNGTargets
-        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
