@@ -14,12 +14,14 @@ if (LIB_TYPE STREQUAL "SHARED_LIBRARY")
 	target_compile_definitions(AwardRNG PUBLIC
             $<BUILD_INTERFACE:AWARDRNGLIB_SHARED_EXPORTS>
             $<INSTALL_INTERFACE:AWARDRNGLIB_SHARED_IMPORTS>)
+	set_target_properties(AwardRNG PROPERTIES POSITION_INDEPENDENT_CODE ON)
 endif()
 
 target_compile_features(AwardRNG
         PUBLIC cxx_auto_type cxx_lambdas)
 target_link_libraries(AwardRNG
-        PUBLIC DecentralizedRNG::Utils DecentralizedRNG::AwardInterface)
+        PRIVATE DecentralizedRNG::Utils
+        PUBLIC DecentralizedRNG::AwardInterface)
 
 #=============== setup installation =======================
 include(GNUInstallDirs)

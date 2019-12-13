@@ -54,64 +54,29 @@ struct Sfmt {
 template <typename TValue>
 class UniformIntDistribution {
 public:
-    static_assert(std::is_integral<TValue>::value, "");
-    // range is inclusive [a..b]
-    UniformIntDistribution(TValue a, TValue b = std::numeric_limits<TValue>::max())
-            :_a{ a }, _b{ b }
-    {
-        assert(a < b);
-    }
+	static_assert(std::is_integral<TValue>::value, "");
+	UniformIntDistribution(TValue a, TValue b = std::numeric_limits<TValue>::max())
+		:_a{ a }, _b{ b }
+	{
+		assert(a < b);
+	}
 
-    template <typename Engine>
-    TValue operator()(Engine& eng) const {
-
-        using CommonType = typename std::common_type<TValue, typename Engine::result_type>::type;
-        CommonType res;
-
-        auto urange = _b - _a;
-        auto erange = eng.max() - eng.min();
-        if (erange > urange) {
-            //down scale
-            auto scale = erange / urange;
-            do {
-                res = CommonType(eng()) - eng.min();
-            } while (res >= scale * urange);
-            res /= scale;
-        } if (erange < urange) {
-            //up scale
-            /*
-              Note that every value in [0, urange]
-              can be written uniquely as
-
-              (erange + 1) * high + low
-
-              where
-
-              high in [0, urange / (erange + 1)]
-
-              and
-
-              low in [0, erange].
-            */
-
-            CommonType tmp; // wraparound control
-            do
-            {
-                const CommonType uerange = erange + 1;
-                const auto high = UniformIntDistribution<TValue>(0, urange / uerange)(eng);
-                const auto low = CommonType(eng()) - eng.min();
-                tmp = (uerange * high);
-                res = tmp + low;
-            }
-            while (res > urange || res < tmp);
-        } else {
-            res = CommonType(eng()) - eng.min();
-        }
-        return res + _a;
-    }
+	template <typename Engine>
+	TValue operator()(Engine& eng) {
+		auto urange = _b - _a;
+		auto erange = eng.max() - eng.min();
+		assert((unsigned)erange > (unsigned)urange);
+		auto scale = erange / urange;
+		while (true) {
+			auto res = eng() - eng.min();
+			if (res >= scale * urange)
+				continue;
+			return res / scale + _a;
+		}
+	}
 private:
-    TValue _a;
-    TValue _b;
+	TValue _a;
+	TValue _b;
 };
 
 // shuffle algorithm

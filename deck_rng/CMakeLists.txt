@@ -14,12 +14,14 @@ if (LIB_TYPE STREQUAL "SHARED_LIBRARY")
     target_compile_definitions(DeckRNG PUBLIC
             $<BUILD_INTERFACE:DECKRNGLIB_SHARED_EXPORTS>
             $<INSTALL_INTERFACE:DECKRNGLIB_SHARED_IMPORTS>)
+    set_target_properties(DeckRNG PROPERTIES POSITION_INDEPENDENT_CODE ON)
 endif()
 
 target_compile_features(DeckRNG
         PUBLIC cxx_auto_type cxx_lambdas)
 target_link_libraries(DeckRNG
-        PUBLIC DecentralizedRNG::Utils DecentralizedRNG::DeckInterface)
+        PRIVATE DecentralizedRNG::Utils
+        PUBLIC DecentralizedRNG::DeckInterface)
 
 #=============== setup installation =======================
 include(GNUInstallDirs)
